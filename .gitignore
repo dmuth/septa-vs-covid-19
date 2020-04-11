@@ -3,5 +3,10 @@
 *~
 *.swp
 
+# Vagrant
+.vagrant/
+
 # Don't pull in our logs/ directory
+logs/
+
 
