@@ -116,7 +116,12 @@
     OR earliest="4/5/2020:4:0:0" latest="4/12/2020:0:0:0" 
 | timechart span=1d dc(trainno) AS num 
 | where num &gt; 0 
-| timewrap 1week series=short</query>
+| timewrap 1week series=exact time_format="Week of %b %e" 
+| rename 
+    "num_Week of Apr  5" as "Week of Apr 5th" 
+    "num_Week of Mar  8" as "Week of Mar 8th"
+    "num_Week of Feb  2" as "Week of Feb 2nd"
+    "num_Week of Jan  5" as "Week of Jan 5th"</query>
           <earliest>0</earliest>
           <latest></latest>
           <sampleRatio>1</sampleRatio>
