@@ -1,5 +1,5 @@
 <form>
-  <label>Regional Rail Status</label>
+  <label>Regional Rail Train Volume by Week</label>
   <fieldset submitButton="false">
     <input type="dropdown" token="time" searchWhenChanged="true">
       <label>Time Range</label>
