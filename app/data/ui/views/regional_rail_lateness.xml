@@ -50,7 +50,7 @@
   </row>
   <row>
     <panel>
-      <title>Minutes Late by Line</title>
+      <title>Avg Minutes Late by Line</title>
       <chart>
         <search>
           <query>index=main earliest=-2w latest=-1w late!=999 
