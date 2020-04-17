@@ -1,16 +1,35 @@
-<dashboard>
+<form>
   <label>Regional Rail Lateness</label>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="time" searchWhenChanged="true">
+      <label>Time Range</label>
+      <choice value="earliest=&quot;1/5/2020:4:0:0&quot; latest=&quot;1/12/2020:0:0:0&quot;">1st Full Week of January</choice>
+      <choice value="earliest=&quot;2/2/2020:4:0:0&quot; latest=&quot;2/9/2020:0:0:0&quot;">1st Full Week of Februrary</choice>
+      <choice value="earliest=&quot;3/8/2020:4:0:0&quot; latest=&quot;3/15/2020:0:0:0&quot;">1st Full Week of March</choice>
+      <choice value="earliest=&quot;4/5/2020:4:0:0&quot; latest=&quot;4/12/2020:0:0:0&quot;">1st Full Week of April</choice>
+      <choice value="earliest=&quot;1/5/2020:4:0:0&quot; latest=&quot;4/12/2020:0:0:0&quot;">Through 1st Full Week of April</choice>
+      <default>earliest="1/5/2020:4:0:0" latest="1/12/2020:4:0:0"</default>
+      <initialValue>earliest="1/5/2020:4:0:0" latest="1/12/2020:4:0:0"</initialValue>
+    </input>
+    <input type="dropdown" token="span" searchWhenChanged="true">
+      <label>Span</label>
+      <choice value="1h">1h</choice>
+      <choice value="3h">3h</choice>
+      <choice value="6h">6h</choice>
+      <choice value="1d">1d</choice>
+      <default>1h</default>
+      <initialValue>1h</initialValue>
+    </input>
+  </fieldset>
   <row>
     <panel>
       <title>Minutes Late</title>
       <chart>
         <search>
-          <query>index=main earliest=-2w latest=-1w late!=999 
-| timechart span=1h 
+          <query>index=main late!=999 $time$ 
+| timechart span=$span$ 
     avg(late) as "Avg Min Late" 
     perc95(late) as "95th Percentile"</query>
-          <earliest>-1h</earliest>
-          <latest>now</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -53,12 +72,10 @@
       <title>Avg Minutes Late by Line</title>
       <chart>
         <search>
-          <query>index=main earliest=-2w latest=-1w late!=999 
-| timechart span=1h 
+          <query>index=main late!=999 $time$ 
+| timechart span=$span$ 
     avg(late) as "Avg Min Late" 
     by line limit=20 useother=false</query>
-          <earliest>-1h</earliest>
-          <latest>now</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -101,10 +118,8 @@
       <title>Number of Trains</title>
       <chart>
         <search>
-          <query>index=main earliest=-2w latest=-1w late!=999 
-| timechart span=1h dc(trainno) as num_trains</query>
-          <earliest>-1h</earliest>
-          <latest>now</latest>
+          <query>index=main late!=999 $time$ 
+| timechart span=$span$ dc(trainno) as num_trains</query>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -147,16 +162,69 @@
       <title>Late Trains Breakdown</title>
       <chart>
         <search>
-          <query>index=main earliest=-2w latest=-1w late!=999 
-late &gt; 5
+          <query>index=main late!=999 $time$ 
+    late &gt; 5 
+| timechart span=$span$ max(late) by trainno limit=100 
+| foreach * 
+    [ eval lates=mvappend(lates, '&lt;&lt;FIELD&gt;&gt;')] 
+| fields _time lates 
+| mvexpand lates 
 | eval lateness=case(
-    late &gt; 30, "&gt; 30 min", 
-    late &gt; 15, "&gt; 15 min", 
-    late &gt; 5, "&gt; 5 min", 
+    lates &gt; 30, "&gt; 30 min", 
+    lates &gt; 15, "&gt; 15 min", 
+    lates &gt; 5, "&gt; 5 min", 
     true(), "OTHER") 
-| timechart span=1h count by lateness</query>
-          <earliest>-1h</earliest>
-          <latest>now</latest>
+| timechart span=$span$ count by lateness</query>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Total Minutes Late</title>
+      <chart>
+        <search>
+          <query>index=main late!=999 $time$ 
+    late &gt; 5 
+| timechart span=$span$ max(late) by trainno limit=100 
+| foreach * 
+    [ eval lates=mvappend(lates, '&lt;&lt;FIELD&gt;&gt;')] 
+| fields _time lates 
+| mvexpand lates
+| timechart span=$span$ sum(lates) AS "Total Minutes Late"</query>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -193,4 +261,4 @@ late &gt; 5
       </chart>
     </panel>
   </row>
-</dashboard>
+</form>
