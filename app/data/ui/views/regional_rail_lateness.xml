@@ -261,4 +261,66 @@
       </chart>
     </panel>
   </row>
+  <row>
+    <panel>
+      <title>Total Minutes Late</title>
+      <chart>
+        <search>
+          <query>index=main late!=999 
+    earliest="1/5/2020:4:0:0" latest="1/12/2020:0:0:0" 
+    OR earliest="2/2/2020:4:0:0" latest="2/9/2020:0:0:0" 
+    OR earliest="3/8/2020:4:0:0" latest="3/15/2020:0:0:0" 
+    OR earliest="4/5/2020:4:0:0" latest="4/12/2020:0:0:0" 
+    late &gt; 5 
+| timechart span=$span$ max(late) by trainno limit=100 
+| foreach * 
+    [ eval lates=mvappend(lates, '&lt;&lt;FIELD&gt;&gt;')] 
+| fields _time lates 
+| mvexpand lates 
+| timechart span=$span$ sum(lates) AS "Total Minutes Late" 
+| timewrap 1week series=exact time_format="Week of %b %e" 
+| rename 
+    "Total Minutes Late_Week of Apr  5" as "Week of Apr 5th" 
+    "Total Minutes Late_Week of Mar  8" as "Week of Mar 8th"
+    "Total Minutes Late_Week of Feb  2" as "Week of Feb 2nd"
+    "Total Minutes Late_Week of Jan  5" as "Week of Jan 5th"</query>
+          <earliest>$earliest$</earliest>
+          <latest>$latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
 </form>
