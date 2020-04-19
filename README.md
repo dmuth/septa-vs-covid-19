@@ -30,6 +30,30 @@ I based this project on my <a href="https://github.com/dmuth/splunk-lab">Splunk 
 which is a Dockerized version of Splunk meant for running ad hoc data analysis.  You should check it out!
 
 
+## FAQ
+
+Q: Why is the indexed data not exported from Splunk?
+A: Turns out that this is _realloy_ slow in Docker on OS/X.  Not exporting that directory increases
+ingestion of 2020's data from 30 minutes to about 45 seconds.
+
+Q: What's up with the missing data around October 22nd to 25th, 2019?
+A: No idea.  It's not in my core Splunk instance so I can only assume that SEPTA's API had issues during that timeframe.  Wouldn't be the first time.  If you want to fill in some of the missing data so that graphs don't have a false drop in them, use this query to grab data from October 21st and copy it to the 23rd:
+
+```
+index=main sourcetype=logs late!=999 earliest="10/21/2019:4:0:0" latest="10/21/2019:24:0:0" 
+| eval trainno="001-" + trainno 
+| eval _time = _time + (86400 * 2) 
+| eval _raw=_time . " trainno=" . trainno . " late=" . late 
+| collect index=main sourcetype=smoothing
+```
+
+That query needs to be run 3 times, and you **must** increment the string in `trainno` by 1 in each run, e.g. `001`, `002`, and `003`.
+
+If you wish to delete those filled in events, use this query:
+
+`index=main earliest=-5y sourcetype=smoothing | delete`
+
+
 ## Additional Questions?
 
 Want to leave feedback or get in touch.  My email is doug.muth@gmail.com.
