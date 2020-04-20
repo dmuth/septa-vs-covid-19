@@ -13,7 +13,7 @@
 set -e
 
 >&2 echo "# "
->&2 echo "# Now reading JSON train data from input and ouputting key=value data..."
+>&2 echo "# Now reading JSON train data from input and outputting key=value data..."
 >&2 echo "# "
 
 
