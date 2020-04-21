@@ -21,7 +21,16 @@ SEPTA's Regional Rail train system before and during the COVID-19 shutdown.
 At this point, Splunk will be running on <a href="https://localhost:8000/">https://localhost:8000/</a>, 
 and it will start ingesting all of the train data.  On my Mac, this took about 60 seconds.
 
-Once the data is ingested, you can view the dashboards.
+
+## Preparing the Data
+
+In order to make some dashboards run at a reasonable speed, you need to run a query which
+rolls up late values and stores them in the `summary` Index.  To do that, <a href="https://localhost:8000/en-US/app/splunk-lab/report?s=%2FservicesNS%2Fnobody%2Fsplunk-lab%2Fsaved%2Fsearches%2FRollup%2520Lates%2520by%2520Day">run this query</a>.  By default, the current year (2020 as of this writing) will be rolled up.  Previous years
+can be rolled up with the selector.
+
+Usage of the `summary` table can be observed with <a href="https://localhost:8000/en-US/app/splunk-lab/summary_table_usage">this sourcetype</a>.
+
+The `summary` table can be wiped with `index=summary earliest=-5y | delete`
 
 
 ## Additional Info
