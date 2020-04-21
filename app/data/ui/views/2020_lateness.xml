@@ -5,24 +5,13 @@
       <title>2020 Lateness</title>
       <chart>
         <search>
-          <query>index=main late!=999 earliest="1/5/2020:4:0:0" latest="4/18/2020:0:0:0" 
-| timechart span=1d 
-    max(late) by trainno 
-    limit=2500 
-| foreach * 
-    [ eval lates=mvappend(lates, '&lt;&lt;FIELD&gt;&gt;')] 
-| fields _time lates 
-| mvexpand lates 
-| eval lateness=case(
-    lates &gt; 5, "&gt; 5 min", 
-    true(), "&lt;= 5 min") 
-| timechart span=1d count by lateness 
-| eval total='&lt;= 5 min' + '&gt; 5 min' 
-| eval pct_late = '&gt; 5 min'/total * 100 
-| fields - total
-| rename "&lt;= 5 min" as "5 Min Late or Less" 
-    | rename "&gt; 5 min" as "Over 5 Min Late" 
-    | rename pct_late as "Percent Late"</query>
+          <query>index=summary sourcetype=lates_by_day2 
+    earliest="1/5/2020:4:0:0" latest="4/18/2020:0:0:0" 
+| timechart span=1d
+    sum(under_5_min) as "Under 5 Minutes Late"
+    sum(over_5) as "&gt; 5 Minutes Late"
+    sum(over_15) as "&gt; 15 Minutes Late"
+    avg(pct_late) as "Percent Late"</query>
           <earliest>-1h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -59,6 +48,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
@@ -70,24 +60,12 @@
       <title>2020 Lateness Weekly</title>
       <chart>
         <search>
-          <query>index=main late!=999 earliest="1/5/2020:4:0:0" latest="4/18/2020:0:0:0" 
-| timechart span=1d 
-    max(late) by trainno 
-    limit=2500 
-| foreach * 
-    [ eval lates=mvappend(lates, '&lt;&lt;FIELD&gt;&gt;')] 
-| fields _time lates 
-| mvexpand lates 
-| eval lateness=case(
-    lates &gt; 5, "&gt; 5 min", 
-    true(), "&lt;= 5 min") 
-| timechart span=1d count by lateness 
-| eval total='&lt;= 5 min' + '&gt; 5 min' 
-| eval pct_late = '&gt; 5 min'/total * 100 
-| fields - total 
-| timechart span=1w 
-    sum("&lt;= 5 min") as "5 Min Late or Less" 
-    sum("&gt; 5 min") as "Over 5 Min Late" 
+          <query>index=summary sourcetype=lates_by_day2 
+    earliest="1/5/2020:4:0:0" latest="4/18/2020:0:0:0" 
+| timechart span=1w
+    sum(under_5_min) as "Under 5 Minutes Late"
+    sum(over_5) as "&gt; 5 Minutes Late"
+    sum(over_15) as "&gt; 15 Minutes Late"
     avg(pct_late) as "Percent Late"</query>
           <earliest>-1h</earliest>
           <latest>now</latest>
@@ -126,6 +104,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
@@ -137,26 +116,13 @@
       <title>2020 Lateness Weekly (Weekday Only)</title>
       <chart>
         <search>
-          <query>index=main late!=999 earliest="1/5/2020:4:0:0" latest="4/18/2020:0:0:0" 
+          <query>index=summary sourcetype=lates_by_day2 
+    earliest="1/5/2020:4:0:0" latest="4/18/2020:0:0:0" 
     date_wday != "saturday" AND date_wday != "sunday" 
-| timechart span=1d 
-    max(late) by trainno 
-    limit=2500 
-| foreach * 
-    [ eval lates=mvappend(lates, '&lt;&lt;FIELD&gt;&gt;')] 
-| fields _time lates 
-| mvexpand lates 
-| eval lateness=case(
-    lates &gt; 5, "&gt; 5 min", 
-    true(), "&lt;= 5 min") 
-| timechart span=1d count by lateness 
-| eval total='&lt;= 5 min' + '&gt; 5 min' 
-| eval pct_late = '&gt; 5 min'/total * 100 
-| fields - total 
-| fields - total 
-| timechart span=1w 
-    sum("&lt;= 5 min") as "5 Min Late or Less" 
-    sum("&gt; 5 min") as "Over 5 Min Late" 
+| timechart span=1w
+    sum(under_5_min) as "Under 5 Minutes Late"
+    sum(over_5) as "&gt; 5 Minutes Late"
+    sum(over_15) as "&gt; 15 Minutes Late"
     avg(pct_late) as "Percent Late"</query>
           <earliest>-1h</earliest>
           <latest>now</latest>
@@ -194,6 +160,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
@@ -205,25 +172,13 @@
       <title>2020 Lateness Weekly (Weekend Only)</title>
       <chart>
         <search>
-          <query>index=main late!=999 earliest="1/5/2020:4:0:0" latest="4/18/2020:0:0:0" 
+          <query>index=summary sourcetype=lates_by_day2 
+    earliest="1/5/2020:4:0:0" latest="4/18/2020:0:0:0" 
     (date_wday = "saturday" OR date_wday = "sunday" ) 
-| timechart span=1d 
-    max(late) by trainno 
-    limit=2500 
-| foreach * 
-    [ eval lates=mvappend(lates, '&lt;&lt;FIELD&gt;&gt;')] 
-| fields _time lates 
-| mvexpand lates 
-| eval lateness=case(
-    lates &gt; 5, "&gt; 5 min", 
-    true(), "&lt;= 5 min") 
-| timechart span=1d count by lateness 
-| eval total='&lt;= 5 min' + '&gt; 5 min' 
-| eval pct_late = '&gt; 5 min'/total * 100 
-| fields - total 
-| timechart span=1w 
-    sum("&lt;= 5 min") as "5 Min Late or Less" 
-    sum("&gt; 5 min") as "Over 5 Min Late" 
+| timechart span=1w
+    sum(under_5_min) as "Under 5 Minutes Late"
+    sum(over_5) as "&gt; 5 Minutes Late"
+    sum(over_15) as "&gt; 15 Minutes Late"
     avg(pct_late) as "Percent Late"</query>
           <earliest>-1h</earliest>
           <latest>now</latest>
@@ -262,6 +217,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
