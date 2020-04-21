@@ -17,7 +17,7 @@ set -e
 >&2 echo "# "
 
 
-grep -iv error | jq -r '._timestamp + " trainno=" + .trainno + " late=" + (.late|tostring) '
+grep -iv error | jq -r '._timestamp + " trainno=" + .trainno + " line=\"" + .line + "\" late=" + (.late|tostring) '
 
 
 
