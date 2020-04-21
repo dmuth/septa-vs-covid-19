@@ -25,7 +25,12 @@ and it will start ingesting all of the train data.  On my Mac, this took about 6
 ## Preparing the Data
 
 In order to make some dashboards run at a reasonable speed, you need to run a query which
-rolls up late values and stores them in the `summary` Index.  To do that, <a href="https://localhost:8000/en-US/app/splunk-lab/report?s=%2FservicesNS%2Fnobody%2Fsplunk-lab%2Fsaved%2Fsearches%2FRollup%2520Lates%2520by%2520Day">run this query</a>.  By default, the current year (2020 as of this writing) will be rolled up.  Previous years
+rolls up late values and stores them in the `summary` Index.  To do that:
+
+- <a href="https://localhost:8000/en-US/app/splunk-lab/report?s=%2FservicesNS%2Fnobody%2Fsplunk-lab%2Fsaved%2Fsearches%2FRollup%2520Lates%2520by%2520Day">run this query</a>.  This will turn each days' trains' lates into a single comma-delimited string in `summary`.
+- Then, <a href="https://localhost:8000/en-US/app/splunk-lab/report?s=%2FservicesNS%2Fnobody%2Fsplunk-lab%2Fsaved%2Fsearches%2FRollup%2520Lates%2520by%2520Day%25202">run this one</a>. This will compute values and percentages on the data from the previous query.  This data is what will be used by the dashboards.
+
+By default, the current year (2020 as of this writing) will be rolled up.  Previous years
 can be rolled up with the selector.
 
 Usage of the `summary` table can be observed with <a href="https://localhost:8000/en-US/app/splunk-lab/summary_table_usage">this sourcetype</a>.
