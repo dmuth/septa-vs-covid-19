@@ -2,7 +2,7 @@
   <label>Table Usage</label>
   <row>
     <panel>
-      <title>Main Table Usage by date.</title>
+      <title>Main Table Usage by Date</title>
       <chart>
         <search>
           <query>| tstats count where index=main earliest=-10y by _time span=1d</query>
@@ -46,7 +46,7 @@
   </row>
   <row>
     <panel>
-      <title>Summary Table Usage by date.</title>
+      <title>Summary Table Usage by Date</title>
       <chart>
         <search>
           <query>| tstats count where index=summary earliest=-10y by _time span=1d</query>
