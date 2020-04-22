@@ -1,0 +1,32 @@
+<form>
+  <label>Summary Table: Phase 1: Rollup Train Lates</label>
+  <fieldset submitButton="true">
+    <input type="time" token="field1" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>now</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Rollup Train Lates to Summary Index</title>
+      <table>
+        <title>Get late values for all trains and write them a single event per day.</title>
+        <search>
+          <query>index=main late!=999 
+| timechart span=1d max(late) by trainno limit=2500 
+| foreach * 
+    [ eval lates=mvappend(lates, '&lt;&lt;FIELD&gt;&gt;')] 
+| fields _time lates 
+| eval lates=mvjoin(lates, ",") 
+| collect index=summary sourcetype=lates_by_day</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</form>

@@ -1,0 +1,46 @@
+<form>
+  <label>Summary Table: Phase 2: Compute Train Stats</label>
+  <fieldset submitButton="true">
+    <input type="time" token="field1" searchWhenChanged="false">
+      <label></label>
+      <default>
+        <earliest>now</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Compute Train Stats in Summary Index</title>
+      <table>
+        <title>Take all late values and compute stats for them.</title>
+        <search>
+          <query>index=summary 
+| eval lates=split(lates, ",") 
+| mvexpand lates 
+| eval lateness=case(
+    lates &gt; 15, "&gt; 15 min", 
+    lates &gt; 5, "&gt; 5 min", 
+    true(), "&lt;= 5 min") 
+| timechart span=1d count by lateness 
+| eval total='&lt;= 5 min' + '&gt; 5 min' + '&gt; 15 min' 
+| eval pct_late = (('&gt; 5 min' + '&gt; 15 min') / total) * 100 
+| fields - total 
+| timechart span=1d 
+    sum("&lt;= 5 min") as under_5_min
+    sum("&gt; 5 min") as over_5
+    sum("&gt; 15 min") as over_15
+    avg(pct_late) as pct_late 
+| eval pct_late=pct_late 
+| eval under_5_min=under_5_min 
+| eval over_5=over_5 
+| eval over_15=over_15 
+| collect index=summary sourcetype=lates_by_day2</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</form>
