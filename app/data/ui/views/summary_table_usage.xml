@@ -1,5 +1,5 @@
 <dashboard>
-  <label>Table Usage</label>
+  <label>Summary Table Usage</label>
   <row>
     <panel>
       <title>Main Table Usage by Date</title>
