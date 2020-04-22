@@ -1,7 +1,7 @@
 <form>
   <label>Summary Index: Phase 2: Compute Train Stats</label>
-  <fieldset submitButton="true">
-    <input type="time" token="field1" searchWhenChanged="false">
+  <fieldset submitButton="false" autoRun="false">
+    <input type="time" token="field1" searchWhenChanged="true">
       <label></label>
       <default>
         <earliest>now</earliest>
@@ -25,8 +25,8 @@
 | timechart span=1d count by lateness 
 | eval total='&lt;= 5 min' + '&gt; 5 min' + '&gt; 15 min' 
 | eval pct_late = (('&gt; 5 min' + '&gt; 15 min') / total) * 100 
-| fields - total 
 | timechart span=1d 
+    sum(total) as total
     sum("&lt;= 5 min") as under_5_min
     sum("&gt; 5 min") as over_5
     sum("&gt; 15 min") as over_15
@@ -40,6 +40,7 @@
           <latest>$field1.latest$</latest>
         </search>
         <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
       </table>
     </panel>
   </row>

@@ -2,7 +2,7 @@
   <label>Summary Index Usage</label>
   <row>
     <panel>
-      <title>Main Table Usage by Date</title>
+      <title>Main Index Usage by Date</title>
       <chart>
         <search>
           <query>| tstats count where index=main earliest=-10y by _time span=1d</query>
@@ -46,13 +46,13 @@
   </row>
   <row>
     <panel>
-      <title>Summary Table Usage by Date</title>
+      <title>Summary Index Usage by Date</title>
       <chart>
         <title>When fully populated, this should have two records for each day</title>
         <search>
-          <query>| tstats count where index=summary earliest=-10y by _time span=1d</query>
-          <earliest>-1h</earliest>
-          <latest>now</latest>
+          <query>| tstats count where index=summary by _time span=1d</query>
+          <earliest>0</earliest>
+          <latest></latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -83,6 +83,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
@@ -91,7 +92,7 @@
   </row>
   <row>
     <panel>
-      <title>Usage by Sourcetype</title>
+      <title>Summary Index Usage by Sourcetype</title>
       <table>
         <title>When fully populated, the two sourcetypes should be equal</title>
         <search>

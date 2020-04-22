@@ -10,10 +10,23 @@
 Welcome to the SEPTA vs COVID-19 Splunk app, brought to you by <a href="https://github.com/dmuth/splunk-lab">Splunk Lab</a>!
 </p>
 
-<p>
+Setup instructions:
+<ul>
+<li>
 Your first stop should be to <a href="/app/splunk-lab/summary_table_phase_1_rollup_train_lates_">start generating events for the summary Index</a>
-</p>
+</li>
+<li>
+Next, <a href="/app/splunk-lab/summary_index_phase_2_compute_train_stats">compute train stats for each day</a>
+</li>
 
+</ul>
+
+Dashboards of Interest:
+<ul>
+  <li><a href="/app/splunk-lab/multiyear_train_stats_by_week">Multi-year Train Stats by Week</a></li>
+  <li><a href="/app/splunk-lab/multiyear_train_stats_by_day">Multi-year Train Stats by Day</a></li>
+  
+</ul>
 
 
 
