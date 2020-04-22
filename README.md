@@ -27,16 +27,16 @@ and it will start ingesting all of the train data.  On my Mac, this took about 6
 In order to make some dashboards run at a reasonable speed, you need to run a query which
 rolls up late values and stores them in the `summary` Index.  Doing that requires two steps:
 
-- <a href="https://localhost:8000/en-US/app/splunk-lab/summary_table_phase_1_rollup_train_lates_"
+- <a href="https://localhost:8000/en-US/app/splunk-lab/summary_index_phase_1_rollup_train_lates"
 	>Use this dashboard</a> to rollup the train late times each day.
-- Then <a href="https://localhost:8000/en-US/app/splunk-lab/summary_table_phase_2_compute_train_stats"
+- Then <a href="https://localhost:8000/en-US/app/splunk-lab/summary_index_phase_2_compute_train_stats"
 	>Use this dashboard</a> to compute daily train stats.
 
 Note that trying to roll up more than a year at once may cause memory warning from Splunk Lab.
 
 Manging the `summary` table:
-- <a href="https://localhost:8000/en-US/app/splunk-lab/summary_table_usage">Summary Table Usage</a> - Use to view usage stats on the `summary` table.
-- <a href="https://localhost:8000/en-US/app/splunk-lab/summary_table_management">Summary Table Management</a> - Use to delete one or both sourcetypes from the `summary` table.
+- <a href="https://localhost:8000/en-US/app/splunk-lab/summary_index_usage">Summary Table Usage</a> - Use to view usage stats on the `summary` table.
+- <a href="https://localhost:8000/en-US/app/splunk-lab/summary_index_management">Summary Table Management</a> - Use to delete one or both sourcetypes from the `summary` table.
 
 
 ## Additional Info

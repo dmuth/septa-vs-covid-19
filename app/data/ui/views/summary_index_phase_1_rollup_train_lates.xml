@@ -1,5 +1,5 @@
 <form>
-  <label>Summary Table: Phase 1: Rollup Train Lates</label>
+  <label>Summary Index: Phase 1: Rollup Train Lates</label>
   <fieldset submitButton="true">
     <input type="time" token="field1" searchWhenChanged="true">
       <label></label>
@@ -29,17 +29,4 @@
       </table>
     </panel>
   </row>
-
-  <row>
-    <panel>
-      <title>Summary Table Management</title>
-      <html encoded="0">
-        <ul>
-        <li>Summary table stats <a href="/app/splunk-lab/summary_table_usage">can be found here</a>.</li>
-        <li>Deleting records from the summary table <a href="/app/splunk-lab/summary_table_management">can be done here</a>.</li>
-        </ul>
-      </html>
-    </panel>
-  </row>
-
 </form>

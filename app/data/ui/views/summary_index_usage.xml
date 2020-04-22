@@ -1,5 +1,5 @@
 <dashboard>
-  <label>Summary Table Usage</label>
+  <label>Summary Index Usage</label>
   <row>
     <panel>
       <title>Main Table Usage by Date</title>
@@ -110,18 +110,4 @@
       </table>
     </panel>
   </row>
-  
-    <row>
-    <panel>
-      <title>Summary Table Management</title>
-      <html encoded="0">
-        <ul>
-        <li><s>Summary table stats can be found here.</s> You're already here!</li>
-        <li>Deleting records from the summary table <a href="/app/splunk-lab/summary_table_management">can be done here</a>.</li>
-        </ul>
-      </html>
-    </panel>
-  </row>
-
-  
 </dashboard>
