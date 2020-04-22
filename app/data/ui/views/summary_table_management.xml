@@ -1,0 +1,43 @@
+<form>
+  <label>Summary Table Management</label>
+  <description>Select a Sourcetype and Press Submit to DELETE All Events from the Summary Table for that Sourcetype</description>
+  <fieldset submitButton="true">
+    <input type="dropdown" token="sourcetype">
+      <label>Sourcetype to Delete</label>
+      <fieldForLabel>sourcetype</fieldForLabel>
+      <fieldForValue>sourcetype</fieldForValue>
+      <search>
+        <query>index=summary 
+| stats count by sourcetype</query>
+        <earliest>0</earliest>
+        <latest></latest>
+      </search>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>index=summary sourcetype=$sourcetype$ | delete</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  
+    <row>
+    <panel>
+      <title>Summary Table Management</title>
+      <html encoded="0">
+        <ul>
+        <li>Summary table stats <a href="/app/splunk-lab/summary_table_usage">can be found here</a>.</li>
+        <li><s>Deleting records from the summary table >can be done here.</s> You're already here!</li>
+        </ul>
+      </html>
+    </panel>
+  </row>
+
+</form>

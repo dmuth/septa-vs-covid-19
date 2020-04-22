@@ -48,6 +48,7 @@
     <panel>
       <title>Summary Table Usage by Date</title>
       <chart>
+        <title>When fully populated, this should have two records for each day</title>
         <search>
           <query>| tstats count where index=summary earliest=-10y by _time span=1d</query>
           <earliest>-1h</earliest>
@@ -92,6 +93,7 @@
     <panel>
       <title>Usage by Sourcetype</title>
       <table>
+        <title>When fully populated, the two sourcetypes should be equal</title>
         <search>
           <query>| tstats count where index=summary earliest=-10y by sourcetype</query>
           <earliest>-1h</earliest>
@@ -108,4 +110,18 @@
       </table>
     </panel>
   </row>
+  
+    <row>
+    <panel>
+      <title>Summary Table Management</title>
+      <html encoded="0">
+        <ul>
+        <li><s>Summary table stats can be found here.</s> You're already here!</li>
+        <li>Deleting records from the summary table <a href="/app/splunk-lab/summary_table_management">can be done here</a>.</li>
+        </ul>
+      </html>
+    </panel>
+  </row>
+
+  
 </dashboard>

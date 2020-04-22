@@ -34,9 +34,9 @@ rolls up late values and stores them in the `summary` Index.  Doing that require
 
 Note that trying to roll up more than a year at once may cause memory warning from Splunk Lab.
 
-Usage of the `summary` table can be observed with <a href="https://localhost:8000/en-US/app/splunk-lab/summary_table_usage">this dashboard</a>.
-
-The `summary` table can be wiped with `index=summary earliest=-5y | delete`
+Manging the `summary` table:
+- <a href="https://localhost:8000/en-US/app/splunk-lab/summary_table_usage">Summary Table Usage</a> - Use to view usage stats on the `summary` table.
+- <a href="https://localhost:8000/en-US/app/splunk-lab/summary_table_management">Summary Table Management</a> - Use to delete one or both sourcetypes from the `summary` table.
 
 
 ## Additional Info
