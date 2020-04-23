@@ -86,6 +86,17 @@ If you wish to delete those filled in events, use this query:
 `index=main earliest=-5y sourcetype=smoothing | delete`
 
 
+Q: What's with the gap in July, 2018?
+
+A: I goofed up with a manual backup.  I now have automated backups to Amazon S3 that happen every 15 minutes.
+
+
+Q: What's with the lower number of trains in July and August, 2016?
+
+A: SEPTA presumably ran fewer trains beacuse <a href="https://www.inquirer.com/philly/blogs/in-transit/SEPTA-Silverliner-V-update.html">a third of its fleet was incapacitated</a>.
+
+
+
 ## Additional Questions?
 
 Want to leave feedback or get in touch.  My email is doug.muth@gmail.com.
