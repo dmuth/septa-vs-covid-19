@@ -27,12 +27,11 @@ and it will start ingesting all of the train data.  On my Mac, this took about 6
 In order to make some dashboards run at a reasonable speed, you need to run a query which
 rolls up late values and stores them in the `summary` Index.  Doing that requires two steps:
 
-- <a href="https://localhost:8000/en-US/app/splunk-lab/summary_index_phase_1_rollup_train_lates"
-	>Use this dashboard</a> to rollup the train late times each day.
-- Then <a href="https://localhost:8000/en-US/app/splunk-lab/summary_index_phase_2_compute_train_stats"
-	>Use this dashboard</a> to compute daily train stats.
-
-Note that trying to roll up more than a year at once may cause memory warning from Splunk Lab.
+- `./rollup-phase1.sh`
+   - This will rollup the train late times each day. 
+   - Note that it will take up to several MINUTES per year of train data.
+- `./rollup-phase2.sh`
+   - This will compute daily train stats from the previous rollup data.
 
 Manging the `summary` table:
 - <a href="https://localhost:8000/en-US/app/splunk-lab/summary_index_usage">Summary Table Usage</a> - Use to view usage stats on the `summary` table.
