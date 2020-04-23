@@ -11,6 +11,7 @@
   </fieldset>
   <row>
     <panel>
+      <title>Train Volume</title>
       <chart>
         <search>
           <query>index=summary sourcetype=lates_by_day2 
@@ -58,7 +59,7 @@
   </row>
   <row>
     <panel>
-      <title>Lateness Weekly</title>
+      <title>Lateness Daily</title>
       <chart>
         <search>
           <query>index=summary sourcetype=lates_by_day2 
@@ -118,7 +119,7 @@
   </row>
   <row>
     <panel>
-      <title>Lateness Weekly (Weekday Only)</title>
+      <title>Lateness Daily (Weekday Only)</title>
       <chart>
         <search>
           <query>index=summary sourcetype=lates_by_day2 
@@ -178,7 +179,7 @@
   </row>
   <row>
     <panel>
-      <title>Lateness Weekly (Weekend Only)</title>
+      <title>Lateness Daily (Weekend Only)</title>
       <chart>
         <search>
           <query>index=summary sourcetype=lates_by_day2 
