@@ -96,6 +96,20 @@ Q: What's with the lower number of trains in July and August, 2016?
 A: SEPTA presumably ran fewer trains beacuse <a href="https://www.inquirer.com/philly/blogs/in-transit/SEPTA-Silverliner-V-update.html">a third of its fleet was incapacitated</a>.
 
 
+Q: How do I get the days with the most/fewest number of trains?
+
+A: Something like this:
+
+```
+index=summary sourcetype=lates_by_day2 total !=0
+| eval day=strftime(_time, "%B %d")
+| eval year=strftime(_time, "%Y")
+| bucket span=1y _time 
+| sort -_time -total
+| dedup 5 _time
+| table year day total
+```
+
 
 ## Additional Questions?
 
