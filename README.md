@@ -15,7 +15,7 @@ SEPTA's Regional Rail train system before and during the COVID-19 shutdown.
 - Make sure you have <a href="https://www.docker.com/">Docker</a> installed on your machine.
 - Clone this repo and cd to that directory.
 - 2020 Train data is already in the `logs/` directory.
-   - But if you would like train data from past years, <a href="https://www.dropbox.com/sh/3jnvonaqtmvc3wh/AACvwz3DMTXrW56P8xBUUIcSa?dl=0">it can be downloaded from Dropbox</a>.
+   - But if you would like train data from past years, <a href="https://www.dropbox.com/sh/3jnvonaqtmvc3wh/AACvwz3DMTXrW56P8xBUUIcSa?dl=0">it can be downloaded from Dropbox</a> in the `trains-and-lateness-only/` directory.
 - Run `./go.sh` to start up Splunk.
 
 At this point, Splunk will be running on <a href="https://localhost:8000/">https://localhost:8000/</a>, 
@@ -54,7 +54,7 @@ ingestion of 2020's data from 30 minutes to about 45 seconds.
 
 Q: Can previous years' train data be used?
 
-A: Yep!  Unless you are running Splunk natively, RAM may be an issue, so my suggestion would be to strip down
+A: **If you are downloading the slimmed down data from the trains-and-lateness-only/ directory on Dropbox, this answer does not apply!**  Yep!  Unless you are running Splunk natively, RAM may be an issue, so my suggestion would be to strip down
 the events.  This can be done with a supplied conversion script as follows:
 
 ```
