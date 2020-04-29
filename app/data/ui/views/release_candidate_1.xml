@@ -14,9 +14,9 @@
       <title>Raw Volume of Data Points</title>
       <chart>
         <search>
-          <query>| tstats count where index=main earliest=-0y@y by _time span=1d</query>
-          <earliest>-1h</earliest>
-          <latest>now</latest>
+          <query>| tstats count where index=main by _time span=1d</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
           <sampleRatio>1</sampleRatio>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
@@ -47,6 +47,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">none</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
