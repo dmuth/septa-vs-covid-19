@@ -1,13 +1,12 @@
 
-# WORK IN PROGRESS
-
-This is currently a work in progress.  Check back for more updates.
-
 
 # SEPTA vs COVID-19
 
 This is a project I am working on to track service levels and performance of 
 SEPTA's Regional Rail train system before and during the COVID-19 shutdown.
+
+If you want to read the conclusions I reached, please check out
+<a href="https://www.dmuth.org/philadelphia-public-transit-vs-covid-19/">my blog post about Philadelphia public transit vs COVID-19</a>.
 
 
 ## Getting started
